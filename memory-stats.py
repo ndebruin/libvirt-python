@@ -1,6 +1,6 @@
 import libvirt
 
-LIBVIRT_URI = "qemu+ssh://ndebruin@192.168.22.231/system"
+LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"
 
 
 client = libvirt.openReadOnly(LIBVIRT_URI)
