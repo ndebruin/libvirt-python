@@ -8,11 +8,7 @@ if client == None:
     print("Failed to open connection to " + LIBVIRT_URI)
     exit(1)
 
-
-
-
-
-
+cpumap = client.getCPUMap()
 
 
 client.close()
