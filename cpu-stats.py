@@ -9,7 +9,9 @@ if client == None:
     exit(1)
 
 cpumap = client.getCPUMap()
+cpustats = client.getCPUStats(libvirt.VIR_NODE_CPU_STATS_ALL_CPUS, 0)
 
+print(cpustats)
 
 client.close()
 exit(0)
