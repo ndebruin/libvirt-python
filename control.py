@@ -1,7 +1,6 @@
 from tabulate import tabulate
 import libvirt
 from time import sleep
-import re
 
 LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"
 client = libvirt.open(LIBVIRT_URI)
