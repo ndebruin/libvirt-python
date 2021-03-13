@@ -1,6 +1,7 @@
 from tabulate import tabulate
 import libvirt
 from time import sleep
+import re
 
 LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"
 client = libvirt.open(LIBVIRT_URI)
@@ -27,8 +28,8 @@ while True:
         domains = client.listAllDomains(0)
         if len(domains) != 0:
             print("\033c", end="")
-            print("List of All VMs on the Host:")
             domain_list = []
+            print("List of All VMs on the Host:")
             for domain in domains:
                 if domain.isActive() == 1:
                     domain_list.append([domain.name(), "Running"])
@@ -40,25 +41,34 @@ while True:
     elif choice == "2":
         domain_choice = input("Please enter the name of the VM you would like to turn on: ")
         VM = client.lookupByName(domain_choice)
-        VM.create()
         if VM.isActive() == 1:
-            print("VM successfully started")
+            print("This VM is already powered up")
             sleep(1)
         else:
-            print("Something has gone wrong")
-            sleep(1)
+            VM.create()
+            if VM.isActive() == 1:
+                print("VM successfully started")
+                sleep(1)
+            else:
+                print("Something has gone wrong")
+                sleep(1)
 
     elif choice == "3":
         domain_choice = input("Please enter the name of the VM you would like to turn off: ")
         VM = client.lookupByName(domain_choice)
-        VM.shutdown()
-        sleep(2)
         if VM.isActive() == 0:
-            print("VM successfully shutdown")
+            print("This VM is already powered down")
             sleep(1)
         else:
-            print("Something has gone wrong")
-            sleep(1)
+            VM.shutdown()
+            sleep(2)
+            if VM.isActive() == 0:
+                print("VM successfully shutdown")
+                sleep(1)
+            else:
+                print("Something has gone wrong")
+                sleep(1)
+
 
     else:
         client.close()
