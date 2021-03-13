@@ -7,36 +7,44 @@ if client == None:
     print("Failed to open connection to " + LIBVIRT_URI)
     exit(1)
 
-print("Please choose an option")
-print("1: List All VMs")
-print("2: Power On VM")
-print("3: Power Off VM")
-print("4: Exit")
 
-choice = input("Your choice: ")
+while True:
+    print("\033c", end="")
+    print("Please choose an option")
+    print("1: List All VMs")
+    print("2: Power On VM")
+    print("3: Power Off VM")
+    print("4: Exit")
 
-if choice == "4":
-    exit(0)
+    choice = input("Your choice: ")
 
-elif choice == "1":
-    print("List of All VMs on the Host:")
-    domains = client.listAllDomains(0)
-    if len(domains) != 0:
-        domain_list = []
-        for domain in domains:
-            if domain.isActive() == 1:
-                domain_list.append([domain.name(), "Running"])
-            elif domain.isActive() == 0:
-                domain_list.append([domain.name(), "Stopped"])
-        print(tabulate(domain_list, headers=["VM Name", "Status"]))
+    if choice == "4":
+        client.close()
+        exit(0)
 
-elif choice == "2":
-    input("Please enter the name of the VM you would like to turn on: ")
+    elif choice == "1":
+        domains = client.listAllDomains(0)
+        if len(domains) != 0:
+            print("\033c", end="")
+            print("List of All VMs on the Host:")
+            domain_list = []
+            for domain in domains:
+                if domain.isActive() == 1:
+                    domain_list.append([domain.name(), "Running"])
+                elif domain.isActive() == 0:
+                    domain_list.append([domain.name(), "Stopped"])
+            print(tabulate(domain_list, headers=["VM Name", "Status"])+"\n")
+            input("Press any key to return")
 
-elif choice == "3":
-    input("Please enter the name of the VM you would like to turn off: ")
+    elif choice == "2":
+        input("Please enter the name of the VM you would like to turn on: ")
 
-else:
-    exit(0)
+    elif choice == "3":
+        input("Please enter the name of the VM you would like to turn off: ")
+
+    else:
+        client.close()
+        exit(0)
+
 client.close()
 exit(0)
