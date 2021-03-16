@@ -7,7 +7,7 @@ from time import sleep
 
 
 #LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"
-#LIBVIRT_URI = "qemu:///system"
+LIBVIRT_URI = "qemu:///system"
 client = libvirt.open(LIBVIRT_URI)
 if client == None:
     print("Failed to open connection to " + LIBVIRT_URI)
