@@ -35,11 +35,10 @@ while True:
             domain_list = []
             print("List of All VMs on the Host:")
             for domain in domains:
-                state, maxmem, mem, cpus, cput = domain.info()
                 if domain.isActive() == 1:
-                    domain_list.append([domain.name(), "Running", str(mem/1024), str(cpus)])
+                    domain_list.append([domain.name(), "Running", str(domain.maxMemory()/1024), str(domain.info()[3])]) 
                 elif domain.isActive() == 0:
-                    domain_list.append([domain.name(), "Stopped", str(mem/1024), str(cpus)])
+                    domain_list.append([domain.name(), "Stopped", str(domain.maxMemory()/1024), str(domain.info()[3])]) #why the fuck does maxMemory work offline, but maxVcpus not?
             print(tabulate(domain_list, headers=["VM Name", "Status", "Memory Allocated in MiB", "Number of vCPUs"])+"\n")
             input("Press any key to return")
 
@@ -98,7 +97,13 @@ while True:
             domain_choice = input("Please enter the name of the VM you would like to change: ")
             VM = client.lookupByName(domain_choice)
             change = input("\nPlease enter the number of vCPUs you would like: ")
-            VM.setVcpusFlags(int(change), )#flags=VIR_DOMAIN_AFFECT_CURRENT)
+            #god i fucking hate this please end this nightmare
+            VM.setVcpusFlags(int(change), flags=6)
+            #first changes the maximum in the config, then changes the current to match the max
+            #this stupidity is needed for when you want to increase the number of vCPUs, but not decrease
+            VM.setVcpusFlags(int(change), flags=0)
+            
+            
 
         elif config_choice == "2":
             domain_choice = input("Please enter the name of the VM you would like to change: ")
