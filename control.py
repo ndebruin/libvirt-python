@@ -33,11 +33,12 @@ while True:
             domain_list = []
             print("List of All VMs on the Host:")
             for domain in domains:
+                state, maxmem, mem, cpus, cput = domain.info()
                 if domain.isActive() == 1:
-                    domain_list.append([domain.name(), "Running"])
+                    domain_list.append([domain.name(), "Running", str(mem/1024), str(cpus)])
                 elif domain.isActive() == 0:
-                    domain_list.append([domain.name(), "Stopped"])
-            print(tabulate(domain_list, headers=["VM Name", "Status"])+"\n")
+                    domain_list.append([domain.name(), "Stopped", str(mem/1024), str(cpus)])
+            print(tabulate(domain_list, headers=["VM Name", "Status", "Memory Allocated in MiB", "Number of vCPUs"])+"\n")
             input("Press any key to return")
 
     elif choice == "2":
