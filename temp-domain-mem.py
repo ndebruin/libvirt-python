@@ -11,6 +11,11 @@ if client == None:
     exit(1)
 
 
+domains = client.listAllDomains()
+for domain in domains:
+    print(domain.memoryParameters())
+
+
 
 
 
