@@ -101,6 +101,7 @@ while True:
             VM.setVcpusFlags(int(change), flags=6)
             #first changes the maximum in the config, then changes the current to match the max
             #this stupidity is needed for when you want to increase the number of vCPUs, but not decrease
+            #values from https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainVcpuFlags
             VM.setVcpusFlags(int(change), flags=0)
             
             
@@ -109,7 +110,13 @@ while True:
             domain_choice = input("Please enter the name of the VM you would like to change: ")
             VM = client.lookupByName(domain_choice)
             change = input("\nPlease enter the amount of RAM in MiB you would like: ")
-            VM.setMemory(int(change))
+            #GOD I HAVE TO DO THE SAME BULLSHIT
+            VM.setMemoryFlags(int(change)*1024, flags=6)
+            #first changes max in config, then matches up the current value to the config
+            #values are the same as above
+            #https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainMemoryModFlags
+            VM.setMemoryFlags(int(change)*1024, flags=0)
+
 
 
     else:
