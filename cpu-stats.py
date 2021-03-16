@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import libvirt
 
 LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"

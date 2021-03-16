@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 from tabulate import tabulate
 import libvirt
 from time import sleep
