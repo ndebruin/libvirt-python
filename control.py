@@ -100,7 +100,7 @@ while True:
             #god i fucking hate this please end this nightmare
             VM.setVcpusFlags(int(change), flags=6)
             #first changes the maximum in the config, then changes the current to match the max
-            #this stupidity is needed for when you want to increase the number of vCPUs, but are not needed for decreaseing
+            #this stupidity is needed for when you want to increase the number of vCPUs, but are not needed for decreasing
             #values from https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainVcpuFlags
             VM.setVcpusFlags(int(change), flags=0)
             
@@ -113,7 +113,7 @@ while True:
             #GOD I HAVE TO DO THE SAME BULLSHIT
             VM.setMemoryFlags(int(change)*1024, flags=6)
             #first changes max in config, then matches up the current value to the config
-            #values are the same as above
+            #values for flags are the same as above
             #https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainMemoryModFlags
             VM.setMemoryFlags(int(change)*1024, flags=0)
 
