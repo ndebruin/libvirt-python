@@ -3,7 +3,7 @@
 from tabulate import tabulate
 import libvirt
 
-LIBVIRT_URI = "qemu+ssh://192.168.22.231/system"
+LIBVIRT_URI = "qemu:///system"
 
 
 
